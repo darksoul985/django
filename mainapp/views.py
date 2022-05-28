@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import json
 import os as os
+from .models import Category, Product
 
 
 contact_file = 'contact.json'
@@ -8,8 +9,15 @@ with open(os.path.join(os.getcwd(), contact_file)) as file:
     contacts = json.load(file)
 
 
-def index(request):
-    return render(request, 'mainapp/index.html')
+def main(request):
+    title = 'главная'
+
+    products = Product.objects.all()[:4]
+    content = {
+        'title': title,
+        'products': products
+    }
+    return render(request, 'mainapp/index.html', content)
 
 
 def contact(request):
@@ -20,15 +28,15 @@ def contact(request):
 
 
 def products(request):
-    links_menu = [
-        {'href': 'products_all', 'title': 'все'},
-        {'href': 'products_home', 'title': 'дом'},
-        {'href': 'products_office', 'title': 'офис'},
-        {'href': 'products_modern', 'title': 'модерн'},
-        {'href': 'products_classic', 'title': 'классика'},
-    ]
-
     content = {
-        'links_menu': links_menu
+        'links_menu': Category.objects.all()
+    }
+    return render(request, 'mainapp/products.html', content)
+
+
+def products_list(request, pk):
+    print(request.resolver_match)
+    content = {
+        'links_menu': Category.objects.all()
     }
     return render(request, 'mainapp/products.html', content)
