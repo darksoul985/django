@@ -23,7 +23,7 @@ import mainapp.views as mainapp
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', mainapp.main, name='main'),
-    path('contact/', mainapp?!?jedi=3, .contact, name='contact'),?!? (arg: Any, *_*namespace: str=...*_*, app_name: str=...) ?!?jedi?!?' '
+    path('contact/', mainapp.contact, name='contact'),
     path('products/', include('mainapp.urls', namespace='products')),
 ]
 
