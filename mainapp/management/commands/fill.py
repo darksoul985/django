@@ -2,7 +2,7 @@ from django.core.management import BaseCommand
 from django.conf import settings
 from authapp.models import ShopUser
 import json
-from mainapp.models import Category, Product
+from mainapp.models import Category, Product, Contacts
 
 
 class Command(BaseCommand):
@@ -43,3 +43,9 @@ class Command(BaseCommand):
         )
         shopuser.set_password('geekbrains')
         shopuser.save()
+
+        Contacts.objects.all().delete()
+        contacts_list = self._load_data_from_file('contact_locations')
+
+        for cont in contacts_list:
+            Contacts.objects.create(**cont)
