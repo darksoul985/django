@@ -9,3 +9,7 @@ class ShopUser(AbstractUser):
         blank=True
     )
     age = models.PositiveIntegerField(verbose_name='Возраст')
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name='Активный пльзователь'
+    )

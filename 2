@@ -1,0 +1,72 @@
+from django.shortcuts import render, get_object_or_404
+from authapp.models import ShopUser
+from adminapp.forms import UserAdminEditForm
+from authapp.forms import ShopUserRegisterForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+
+def user_create(request):
+    if request.method == 'POST':
+        user_form = ShopUserRegisterForm(request.POST, request.FILES)
+        if user_form.is_valid():
+            user_form.save()
+            return HttpResponseRedirect(reverse('adminapp:user_read'))
+
+    else:
+        user_form = ShopUserRegisterForm()
+
+    context = {
+        'title': 'Создать пользователя',
+        'object': user_form
+    }
+    return render(request, 'adminapp/user_update.html', context)
+
+
+def user_read(request):
+    context = {
+        'title': 'админка/пользователи',
+        'objects': ShopUser.objects.all().order_by(
+            'is_superuser',
+            '-is_active'
+        ),
+    }
+    return render(request, 'adminapp/user_list.html', context)
+
+
+def user_update(request, pk):
+    user_item = get_object_or_404(ShopUser, pk=pk)
+    if request.method == 'POST':
+        edit_form = UserAdminEditForm(
+            request.POST,
+            request.FILES,
+            instance=user_item
+        )
+
+        if edit_form.is_valid():
+            edit_form.save()
+            return HttpResponseRedirect(
+                reverse('adminapp:user_update', args=[user_item.pk])
+            )
+        else:
+            edit_form = UserAdminEditForm(instance=user_item)
+
+    context = {
+        'title': 'редактирование пользователя',
+        'form': edit_form
+    }
+    return render(request, 'adminapp/user_form.html', context)
+
+
+def user_delete(request, pk):
+    user_item = get_object_or_404(ShopUser, pk=pk)
+    if request.method == 'POST':
+        user_item.is_activ = False
+        user_item.save()
+        return HttpResponseRedirect(reverse('adminapp:user_read'))
+
+    context = {
+        'title': 'Удаление пользователя',
+        'object': user_item
+    }
+    return render(request, 'adminapp/user_delete_confirm.html', context)
