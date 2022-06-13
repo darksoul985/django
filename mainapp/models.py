@@ -3,9 +3,13 @@ from PIL import Image
 
 
 class Category(models.Model):
-    name = models.CharField(verbose_name='название категории', max_length=64,
-                            unique=True)
+    name = models.CharField(
+        verbose_name='название категории',
+        max_length=64,
+        unique=True
+    )
     description = models.TextField(verbose_name='краткое описание', blank=True)
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
 
     def __str__(self):
         return f'{self.pk} {self.name}'
@@ -24,6 +28,7 @@ class Product(models.Model):
     description = models.TextField(verbose_name='Описание')
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name='Цена')
     quantity = models.PositiveSmallIntegerField(default=0, verbose_name='Количество')
+    is_active = models.BooleanField(default=True, verbose_name='Активен')
 
     def __str__(self):
         return f'{self.name} ({self.category.name})'

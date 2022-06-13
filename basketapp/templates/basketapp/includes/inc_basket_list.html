@@ -1,5 +1,7 @@
 {% extends 'basketapp/base.html' %}
+
 {% load static %}
+
 {% block content %}
     {% for item in baskets %}
         <div class="basket_record">
@@ -19,6 +21,7 @@
             </button>
         </div>
     {% endfor %}
+
     {% if baskets %}
         <div class="basket_summary">
             В корзине {{ baskets.0.total_quantity }} товаров общей стоимостью

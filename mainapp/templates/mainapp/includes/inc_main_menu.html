@@ -15,6 +15,9 @@
             <a href="{% url 'authapp:login' %}" >вход</a>
         </li>
     {% endif %}
+    {% if user.is_superuser %}
+        <li><a href="{% url 'adminapp:user_read' %}">админка</a></li>
+    {% endif %}
 
 </ul>
 <a href="#" class="search"></a>

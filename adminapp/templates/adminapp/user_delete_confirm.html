@@ -1,0 +1,22 @@
+{% extends 'adminapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            Уверены, что хотите удалить пользвоателя {{ object.get_full_name }} ({{ object.username }})
+            <form method="post">
+                {% csrf_token %}
+
+                <button class="btn btn-danger">Уверен</button>
+                <a class="btn btn-info" href="{% url 'adminapp:user_read' %}">Вернуться к списку пользователей</a>
+            </form>
+
+        </div>
+
+
+    </div>
+
+
+{% endblock %}
