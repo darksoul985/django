@@ -1,4 +1,5 @@
 from django.db import models
+from PIL import Image
 
 
 class Category(models.Model):
@@ -26,6 +27,20 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.name} ({self.category.name})'
+
+    """
+    метод для изменения разрешения под требования сайта
+    """
+
+    def save(self):
+        super().save()  # первичное сохранение изображения
+
+        img = Image.open(self.image.path)  # отрываем изображение
+
+        if img.height > 270 or img.width > 270:
+            new_img = (270, 270)
+            img.thumbnail(new_img)
+            img.save(self.image.path)
 
     class Meta:
         verbose_name = 'продукт'
