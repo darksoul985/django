@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404
-# import json
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # import os as os
 from mainapp.models import Category, Product, Contacts
 # from basketapp.models import Basket
 from mainapp.services import get_basket, get_hot_product, get_same_product
 
-
+# загрузка файла напрямую на сайт
 # contact_file = 'contact.json'
 # with open(os.path.join(os.getcwd(), contact_file)) as file:
 #     contacts = json.load(file)
@@ -47,10 +47,19 @@ def products(request, pk=None):
             products_list = Product.objects.filter(category__id=pk).\
                 order_by('-price')
 
+        page = request.GET.get('page')
+        paginator = Paginator(products_list, 3)
+        try:
+            paginated_products = paginator.page(page)
+        except PageNotAnInteger:
+            paginated_products = paginator.page(1)
+        except EmptyPage:
+            paginated_products = paginator.page(paginator.num_pages)
+
         context = {
             'title': title,
             'links_menu': links_menu,
-            'products': products_list,
+            'products': paginated_products,
             'category': category_item,
             'basket': get_basket(request.user)
         }

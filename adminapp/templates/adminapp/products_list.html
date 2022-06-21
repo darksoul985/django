@@ -1,46 +1,47 @@
 {% extends 'adminapp/base.html' %}
 {% load static %}
+{% load my_tags %}
 
 {% block content %}
-    <div class="products_list">
-        <button class="new_product">
-            <a href="{% url 'adminapp:product_create' category.pk %}">
-                новый продукт
-            </a>
-        </button>
-        {% for object in objects %}
-            <div class="product_record">
-            <img src="{% if object.image %}/media/{{object.image}}{% else %}{% static 'img/default_product.jpg'%}{% endif %}" alt="{{ object.name }}">
-            <div class="product_name">
-                {{ object.name|title }}
-            </div>
-            <div class="product_actions">
-                <button>
-                    <a href="#{# url 'adminapp:product_read' object.pk #}">
-                        подробнее
-                    </a>
-                </button>
-                <button>
-                    <a href="#{# url 'adminapp:product_update' object.pk #}">
-                        редактировать
-                    </a>
-                </button>
-                <button>
-                    <a href="#{# url 'adminapp:product_delete' object.pk #}">
-                        удалить
-                    </a>
-                </button>
-            </div>
-            <div class="summary">
-                <b>цена</b>
-                <p>{{ object.price }} руб</p>
-                <b>количество</b>
-                <p>{{ object.quantity }}</p>
-            </div>
-            <div class="product_desc">
-                {{ object.short_desc|title }}
-            </div>
-            </div>
-        {% endfor%}
+<div class="products_list">
+    <button class="new_product">
+        <a href="{% url 'adminapp:product_create' object.pk %}">
+            новый продукт
+        </a>
+    </button>
+    {% for product_item in object.products.all %}
+    <div class="product_record">
+        <img src="{{ product_item.image|media_for_products }}" alt="">
+        <div class="product_name">
+            {{ product_item.name|title }}
+        </div>
+        <div class="product_actions">
+            <button>
+                <a href="{% url 'adminapp:product_detail' product_item.pk %}">
+                    подробнее
+                </a>
+            </button>
+            <button>
+                <a href="#{# url 'adminapp:product_update' product_item.pk #}">
+                    редактировать
+                </a>
+            </button>
+            <button>
+                <a href="#{# url 'adminapp:product_delete' product_item.pk #}">
+                    удалить
+                </a>
+            </button>
+        </div>
+        <div class="summary">
+            <b>цена</b>
+            <p>{{ product_item.price }} руб</p>
+            <b>количество</b>
+            <p>{{ product_item.quantity }}</p>
+        </div>
+        <div class="product_desc">
+            {{ product_item.short_desc|title }}
+        </div>
     </div>
+    {% endfor%}
+</div>
 {% endblock %}

@@ -1,5 +1,6 @@
 from django.db import models
-from PIL import Image
+# from django.conf import settings
+# from PIL import Image
 
 
 class Category(models.Model):
@@ -21,7 +22,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория', related_name='products')
     name = models.CharField(max_length=128, verbose_name='Название')
     image = models.ImageField(upload_to='product', blank=True, verbose_name='Изображение')
     short_desc = models.CharField(max_length=256, verbose_name='Краткое описание')
@@ -33,23 +34,24 @@ class Product(models.Model):
     def __str__(self):
         return f'{self.name} ({self.category.name})'
 
-    """
-    метод для изменения разрешения под требования сайта
-    """
-
-    def save(self):
-        super().save()  # первичное сохранение изображения
-
-        img = Image.open(self.image.path)  # отрываем изображение
-
-        if img.height > 270 or img.width > 270:
-            new_img = (270, 270)
-            img.thumbnail(new_img)
-            img.save(self.image.path)
-
     class Meta:
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
+
+#     def save(self):
+#
+#         """
+#         метод для изменения разрешения под требования сайта
+#         """
+#         super().save()  # первичное сохранение изображения
+#
+#         if self.image.path  != f'{settings.STATIC_URL}default_product.jpg':
+#             img = Image.open(self.image.path)  # отрываем изображение
+#
+#             if img.height > 270 or img.width > 270:
+#                 new_img = (270, 270)
+#                 img.thumbnail(new_img)
+#                 img.save(self.image.path)
 
 
 class Contacts(models.Model):
