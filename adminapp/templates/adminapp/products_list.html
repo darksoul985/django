@@ -22,12 +22,12 @@
                 </a>
             </button>
             <button>
-                <a href="#{# url 'adminapp:product_update' product_item.pk #}">
+                <a href="{% url 'adminapp:product_update' product_item.pk %}">
                     редактировать
                 </a>
             </button>
             <button>
-                <a href="#{# url 'adminapp:product_delete' product_item.pk #}">
+                <a href="{% url 'adminapp:product_delete' product_item.pk %}">
                     удалить
                 </a>
             </button>

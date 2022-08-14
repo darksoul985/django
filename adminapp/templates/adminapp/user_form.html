@@ -1,11 +1,11 @@
 {% extends 'adminapp/base.html' %}
 {% load static %}
+{% load my_tags %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-3">
-            <img src="{% if object.avatar %}/media/{{ object.avatar }}{% else %}{% static 'img/default.jpg' %}{% endif %}"
- alt="">
+            <img src="{{ object.avatar|media_for_users }} alt="">
         </div>
         <div class="col-md-6">
             <form class="form-horizontal" method="post" enctype="multipart/form-data">

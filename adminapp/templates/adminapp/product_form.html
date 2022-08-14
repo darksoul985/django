@@ -1,11 +1,12 @@
 {% extends 'adminapp/base.html' %}
 {% load static %}
+{% load my_tags %}
 
 {% block content %}
+
     <div class="row">
         <div class="col-md-3">
-        <img src="{% if object.image %}/media/{{ object.image }}{% else %}{% static 'img/default_product.jpg' %}{% endif %}"
-             alt="">
+            <img src="{{ object.image|media_for_products }}" alt="">
         </div>
         <div class="col-md-6">
             <form class="form-horizontal" method="post" enctype="multipart/form-data">
@@ -14,7 +15,7 @@
                 <input class="form-control" type="submit" value="сохранить">
             </form>
             <button class="btn btn-round form-control last">
-                <a href=" {% url 'adminapp:category_read' %}">
+                <a href=" {% url 'adminapp:products_read' category.pk %}">
                     к списку товаров категории
                 </a>
             </button>
