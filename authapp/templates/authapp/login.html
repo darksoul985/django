@@ -12,5 +12,6 @@
         <button class="btn btn-primary" type="submit">Войти</button>
     </form>
     <a class="btn btn-info" href="{% url 'authapp:register' %}" style="width: 100%">зарегистрироваться</a>
+    <a class="btn btn-info" href="{% url 'social:begin' 'vk-oauth2' %}?next=/" style="width: 100%">войте через ВКонтакте</a>
 
 {% endblock %}
