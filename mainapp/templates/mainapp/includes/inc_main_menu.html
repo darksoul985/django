@@ -7,7 +7,10 @@
     <ul class="dropdown-menu">
         {% if user.is_authenticated %}
             <li>
-                <a class="dropdown-item" href="{% url 'authapp:edit' %}" >{{ user.first_name|default:'пользователь' }}</a>
+                <a class="dropdown-item" href="{% url 'authapp:edit' %}" >{{ user.first_name|default:'профиль' }}</a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="{% url 'orders:orders_list' %}">заказы</a>
             </li>
             <li>
                 <a class="dropdown-item" href="{% url 'authapp:logout' %}">выход</a>
