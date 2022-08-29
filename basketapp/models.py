@@ -3,7 +3,17 @@ from django.conf import settings
 from mainapp.models import Product
 
 
+class BasketQuerySet(models.QuerySet):
+    def delete(self, *args, **kwargs):
+        for object in self:
+            object.product.quantity += object.quantity
+            object.product.save()
+        super().delete(*args, **kwargs)
+
+
 class Basket(models.Model):
+    objects = BasketQuerySet.as_manager()
+
     product = models.ForeignKey(
         Product,
         on_delete=models.CASCADE,
@@ -54,6 +64,14 @@ class Basket(models.Model):
     @staticmethod
     def get_item(pk):
         return Basket.objects.filter(pk=pk).first()
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            self.product.quantity -= self.quantity - self.__class__.get_item(self.pk).quantity
+        else:
+            self.product.quantity -= self.quantity
+        self.product.save()
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'корзина'
