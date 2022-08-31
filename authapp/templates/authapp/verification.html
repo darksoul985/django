@@ -1,0 +1,16 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <h3>Поздравляем с успешным завершением регистрации, {{ user.username }}</h3>
+    {% else %}
+        <h3>Активация не пройдена</h3>
+    {% endif %}
+
+    <button class="btn btn-round form-control last">
+        <a href=" {% url 'main' category.pk %}">
+            перейти на сайт
+        </a>
+    </button>
+{% endblock %}
