@@ -14,7 +14,7 @@ The `urlpatterns` list routes URLs to views. For more information please see:
         2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
         """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
 from django.conf.urls import include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -38,3 +38,7 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT
     )
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += [re_path(r'^__debug__/', include(debug_toolbar.urls))]
