@@ -64,6 +64,7 @@ class Basket(models.Model):
     @staticmethod
     def get_item(pk):
         return Basket.objects.filter(pk=pk).first()
+        # return user.basket.select_related().order_by('product__category')
 
     def save(self, *args, **kwargs):
         if self.pk:

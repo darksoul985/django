@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'adminapp.apps.AdminappConfig',
     'social_django',
     'ordersapp.apps.OrdersappConfig',
+    'django_extensions',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -68,7 +69,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -205,7 +206,7 @@ if DEBUG:
         return True
 
     DEBUG_TOOLBAR_CONFIG = {
-        'SHOW_TOOLBAR_COLLBACK': show_toolbar
+        'SHOW_TOOLBAR_CALLBACK': show_toolbar
     }
 
     DEBUG_TOOLBAR_PANELS = [
