@@ -1,0 +1,6 @@
+http://127.0.0.1:8000/
+http://127.0.0.1:8000/auth/login/ POST username=django&password=geekbrains
+http://127.0.0.1:8000/products/
+http://127.0.0.1:8000/contacts/
+
+http://127.0.0.1:8000/basket/
